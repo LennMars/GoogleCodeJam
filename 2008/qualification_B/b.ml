@@ -41,15 +41,15 @@ let solve i =
       A ->
 	  if is_available trains_a then
 	    List.tl trains_a, available_time :: trains_b
-	  else begin
+	  else(
 	    incr num_trians_a;
-	    (trains_a, available_time :: trains_b) end
+	    trains_a, available_time :: trains_b)
     | B ->
 	  if is_available trains_b then
-	    (available_time :: trains_a, List.tl trains_b)
-	  else begin
+	    available_time :: trains_a, List.tl trains_b
+	  else(
 	    incr num_trians_b;
-	    (available_time :: trains_a, trains_b) end
+	    available_time :: trains_a, trains_b)
   in
   let rec aux (trains_a, trains_b) = function
       [] -> (!num_trians_a, !num_trians_b)
