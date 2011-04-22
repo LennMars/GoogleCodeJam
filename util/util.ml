@@ -18,6 +18,7 @@ let triple1 (x, _, _) = x
 let triple2 (_, x, _) = x
 let triple3 (_, _, x) = x
 
+let pi = atan 1. *. 4.
 
 let rec iter n f x =
   if n <= 0 then ()

@@ -1,0 +1,5 @@
+#load "nums.cma"
+#load "str.cma"
+#directory "../../util"
+#load "../../util/utils.cma"
+#use "a.ml"
