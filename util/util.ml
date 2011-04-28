@@ -163,21 +163,25 @@ module List = struct
     in
     remove_aux []
 
-  let find_max f xs =
-    if List.length xs = 0 then raise (Invalid_argument "") else
-      List.fold_left (fun x y -> if f x > f y then x else y) (List.hd xs) (List.tl xs)
+  let find_max_with comp f = function
+      [] -> raise (Invalid_argument "find_max_with")
+    | hd :: tl -> List.fold_left (fun x y -> if comp (f x) (f y) > 0 then x else y) hd tl
 
-  let find_max_val f xs =
-    if List.length xs = 0 then raise (Invalid_argument "") else
-      List.fold_left (fun x y -> if x > f y then x else f y) (f (List.hd xs)) (List.tl xs)
+  let find_min_with comp = find_max_with (swap_arg comp)
 
-  let find_min f xs =
-    if List.length xs = 0 then raise (Invalid_argument "") else
-      List.fold_left (fun x y -> if f x < f y then x else y) (List.hd xs) (List.tl xs)
+  let find_max_val_with comp f = function
+      [] -> raise (Invalid_argument "find_max_val_with")
+    | hd :: tl -> List.fold_left (fun x y -> let fy = f y in if comp x fy > 0 then x else fy) (f hd) tl
 
-  let find_min_val f xs =
-    if List.length xs = 0 then raise (Invalid_argument "") else
-      List.fold_left (fun x y -> if x < f y then x else f y) (f (List.hd xs)) (List.tl xs)
+  let find_min_val_with comp = find_max_val_with (swap_arg comp)
+
+  let find_max f = find_max_with compare f
+
+  let find_min f = find_min_with compare f
+
+  let find_max_val f = find_max_val_with compare f
+
+  let find_min_val f = find_min_val_with compare f
 
   let mapi f =
     let rec mapi_aux f accum n = function
@@ -349,6 +353,11 @@ module Array = struct
 	done;
 	xs2
 
+  let map2 f xs ys =
+    let n = Array.length xs in
+    if n <> Array.length ys then raise (Invalid_argument "map2")
+    else Array.init n (fun i -> f xs.(i) ys.(i))
+
   (** Swap two elements at the designated locations. destructive. *)
   let swap i j xs =
     let elm_j = xs.(j) in
@@ -392,6 +401,19 @@ module Array = struct
 
   (** Same to that of List *)
   let for_all cond xs = Array.fold_left (fun p x -> p && cond x) true xs
+
+  let for_all2 cond xs ys =
+    let n = Array.length xs in
+    if n <> Array.length ys then raise (Invalid_argument "for_all2")
+    else
+      let p = ref true in
+      let _ =
+	for i = 0 to n - 1 do
+	  if not (cond xs.(i) ys.(i)) then p := false
+	done
+      in
+      !p
+
 
   (** Same to that of List *)
   let exists cond xs = Array.fold_left (fun p x -> p || cond x) false xs

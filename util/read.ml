@@ -30,7 +30,7 @@ let extract_float = function
 
 let match_as_expr s : expr =
   match Str.split (regexp "[ ¥t]+") s with
-    [] -> `Empty
+    [] -> raise End_of_file (* `Empty *)
   | [single] ->
       (try `Int (int_of_string single) with Failure _ ->
 	try `Float (float_of_string single) with Failure _ ->
@@ -39,6 +39,9 @@ let match_as_expr s : expr =
       (try `IntList (List.map int_of_string ss) with Failure _ ->
 	try `FloatList (List.map float_of_string ss) with Failure _ ->
 	  `StringList ss)
+
+let list_of of_string ss =
+  List.map of_string (Str.split (regexp "[ ¥t]+") ss)
 
 (*
 let read parse_int filename =

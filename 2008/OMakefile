@@ -1,1 +1,1 @@
-.SUBDIRS: qualification_A qualification_B R1A_A
+.SUBDIRS: qualification_A qualification_B R1A_A R1A_C R1B_A
