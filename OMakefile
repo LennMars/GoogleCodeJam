@@ -9,4 +9,4 @@ OCAMLFLAGS += -dtypes -g -w ys
 OCAMLCFLAGS =
 OCAMLFINDFLAGS +=
 
- .SUBDIRS: util 2008
+ .SUBDIRS: util 2008 2011
