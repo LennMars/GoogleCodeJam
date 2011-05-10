@@ -4,12 +4,6 @@ open List
 open String
 let input = if Array.length Sys.argv > 1 then Sys.argv.(1) else "B-small-attempt0.in"
 
-(*
-let pair = [|[|"Q";"F";"T"|]|]
-let opp = [|[|"Q";"F"|]|]
-let prob = ["F";"A";"Q";"F";"D";"F";"Q"]
- *)
-
 let string_to_list s =
   let n = length s in
   let rec aux s acc n =

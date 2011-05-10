@@ -11,11 +11,6 @@ let (raw_int, raw) = read parse_int input
 let num_testcases = extract_int raw_int.(0)
 let raw = Array.map (fun l -> List.hd l |> Str.split (Str.regexp " ") |> List.map (fun s -> int_of_string s - 1) |> Array.of_list) raw
 
-let a1 = [|0;3;2;1;4;5;6|]
-let a2 = [|1;2;3;0|]
-let a3 = [|5;19;3;4;1;15;7;8;6;2;18;20;9;14;13;16;17;10;12;11|] |> Array.map (fun i -> i - 1)
-
-
 let loop a i =
   if i = a.(i) then 0 else
     let rec aux j acc =

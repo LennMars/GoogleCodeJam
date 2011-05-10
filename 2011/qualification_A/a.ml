@@ -3,13 +3,6 @@ open Read
 open List
 let input = if Array.length Sys.argv > 1 then Sys.argv.(1) else "sample.txt"
 
-let probs1 = [("O", 2); ("B", 1); ("B", 2); ("O", 4)]
-let nexts1 = ["O";"B";"B";"O"]
-let probs2 = [("O", 2); ("B", 4)]
-let nexts2 = ["O";"B"]
-let probs3 = ["B", 2; "B",  1]
-let nexts3 = ["B";"B"]
-
 let parse_int i expr =
   if i = 0 then
     match expr with
