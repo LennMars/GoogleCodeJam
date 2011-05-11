@@ -3,6 +3,7 @@ open Str
 
 type expr = [`String of string | `StringList of string list | `IntList of int list | `Int of int | `Float of float | `FloatList of float list | `Empty]
 
+let spsp = split (regexp " ")
 
 let extract_string = function
     `String s -> s
@@ -42,37 +43,6 @@ let match_as_expr s : expr =
 
 let list_of of_string ss =
   List.map of_string (Str.split (regexp "[ ¥t]+") ss)
-
-(*
-let read parse_int filename =
-  let line_num = ref (-1) in
-  let file_in = open_in filename in
-  let input_line () =
-    line_num := !line_num + 1;
-    input_line file_in
-  in
-  let rec read_block (m, n) accum =
-    let rec aux m accum =
-      if m <= 0 then List.rev accum
-      else aux (m - 1) (input_line () :: accum)
-    in
-    if n <= 0 then accum
-    else read_block (m, n - 1) (aux m [] :: accum)
-  in
-  let rec main ints strings =
-    try
-      let line = input_line () in
-      try
-	let i = int_of_string line in
-	main (i :: ints) (read_block (parse_int !line_num i) [] @ strings)
-      with
-	Failure "int_of_string" -> main ints ([line] :: strings)
-    with End_of_file ->
-      close_in file_in;
-      (List.rev ints |> Array.of_list, List.rev strings |> Array.of_list)
-  in
-  main [] []
- *)
 
 let read parse_expr filename =
   let line_num = ref (-1) in
