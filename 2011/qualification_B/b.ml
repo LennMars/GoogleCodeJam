@@ -2,7 +2,7 @@ open Util
 open Read
 open List
 open String
-let input = if Array.length Sys.argv > 1 then Sys.argv.(1) else "B-small-attempt0.in"
+let input = if Array.length Sys.argv > 1 then Sys.argv.(1) else "sample.txt"
 
 let string_to_list s =
   let n = length s in
@@ -15,9 +15,13 @@ let string_to_list s =
 let parse_int i expr =
   if i = 0 then (extract_int expr, 1)
   else failwith ""
+
 let (raw_int, raw) = read parse_int input
+
 let raw = raw.(0) |> List.map (Str.split (Str.regexp " ")) |> Array.of_list
+
 let num_testcases = extract_int raw_int.(0)
+
 let make s =
   let num_pair = List.hd s |> int_of_string in
   let s = List.tl s in
@@ -38,12 +42,6 @@ let make s =
   in
   let (opp, s) = get num_opp [] s in
   (pair |> Array.of_list, opp |> Array.of_list, List.nth s 1 |> string_to_list)
-
-let rec remove_until cond xs =
-    match xs with
-      [] -> raise Not_found
-    | hd :: tl when cond hd -> tl
-    | hd :: tl -> remove_until cond tl
 
 let pr = List.iter print_string
 
@@ -83,11 +81,7 @@ let solve is_debug (pair, opp, prob) =
 let solve' is_debug n =
   solve is_debug (make raw.(n))
 
-let pr s =
-  if s = [] then "" else
-  List.fold_left (fun a b -> a ^", "^b) "" s |> fun x -> String.sub x 2 (3 * List.length s - 2)
-
 let _ =
   for m = 1 to num_testcases do
-    Printf.printf "Case #%d: [%s]\n" m (solve' false (m - 1) |> pr);
+    Printf.printf "Case #%d: [%s]\n" m (solve' false (m - 1) |> String.concat ", ");
   done

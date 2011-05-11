@@ -27,10 +27,6 @@ let move pos term =
   else if term - pos > 0 then pos + 1
   else if term - pos < 0 then pos - 1
   else pos
-let nextC (posO, posB) (termO, termB) =
-  let distO = abs (posO - termO)
-  and distB = abs (posB - termB) in
-  if distO <= distB then "O" else "B"
 
 let rec aux ps (posO, posB) (termO, termB) nexts turn =
 (*   Printf.printf "pos : (%d, %d), term : (%d, %d)\n" posO posB termO termB; *)
